@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MOOV | Painel de Governança</title>
+
+  <link rel="preconnect" href="https://unpkg.com" />
+  <link rel="preconnect" href="https://basemaps.cartocdn.com" />
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIINfQYh5q47jgDzyqz/p/tgTuR4fUYyI1U="
+    crossorigin=""
+  />
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+
+<body>
+  <div class="ambient-grid"></div>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-block">
+        <a class="brand-mark" href="./index.html" aria-label="MOOV">MOOV</a>
+        <div class="brand-subtitle">Mobilidade que salva. Transporte. Agilidade. Cuidado.</div>
+      </div>
+
+      <section class="panel-card hero-card">
+        <p class="eyebrow">Painel de governança</p>
+        <h1>A inteligência da gestão</h1>
+        <p class="muted">
+          Mapa vivo, microeventos e linha do tempo para enxergar a transição assistencial sem sobrecarregar a ponta.
+        </p>
+      </section>
+
+      <nav class="quick-links" aria-label="Navegação do protótipo">
+        <a href="./index.html" class="quick-link active">Dashboard gestor</a>
+        <a href="./pages/motorista.html" class="quick-link">Link motorista</a>
+        <a href="./pages/enfermagem.html" class="quick-link">Link enfermagem</a>
+        <a href="./pages/destino.html" class="quick-link">Link destino</a>
+      </nav>
+
+      <section class="metric-grid">
+        <article class="metric-card">
+          <span class="metric-label">Transferências hoje</span>
+          <strong id="kpiTotal">--</strong>
+          <small>Eventos ativos e finalizados</small>
+        </article>
+        <article class="metric-card">
+          <span class="metric-label">Tempo médio de resposta</span>
+          <strong id="kpiAvg">--</strong>
+          <small>Microeventos calculados</small>
+        </article>
+        <article class="metric-card warning">
+          <span class="metric-label">Alertas ativos</span>
+          <strong id="kpiAlerts">--</strong>
+          <small>Gargalos operacionais</small>
+        </article>
+        <article class="metric-card">
+          <span class="metric-label">Lastro documental</span>
+          <strong id="kpiComplete">--</strong>
+          <small>Checks completos</small>
+        </article>
+      </section>
+
+      <section class="panel-card">
+        <div class="section-header">
+          <p class="eyebrow">Filtros de governança</p>
+          <button class="ghost-button" id="resetFilters">Limpar</button>
+        </div>
+
+        <label class="field-label" for="flowType">Tipo de fluxo</label>
+        <select id="flowType" class="select-field">
+          <option value="all">Todos</option>
+          <option value="municipal">Municipal / PMV</option>
+          <option value="samu">SAMU 192</option>
+        </select>
+
+        <label class="field-label" for="statusFilter">Status</label>
+        <select id="statusFilter" class="select-field">
+          <option value="all">Todos</option>
+          <option value="solicitada">Solicitada</option>
+          <option value="designada">Veículo designado</option>
+          <option value="embarcado">Paciente embarcado</option>
+          <option value="deslocamento">Em deslocamento</option>
+          <option value="aguardando">Aguardando recebimento</option>
+          <option value="recebido">Recebido</option>
+          <option value="finalizado">Finalizado</option>
+        </select>
+      </section>
+
+      <section class="panel-card note-card">
+        <p class="eyebrow">Separação de responsabilidade</p>
+        <p>
+          Fluxo <strong>PMV/Municipal</strong> entra na governança municipal.
+          Fluxo <strong>SAMU 192</strong> aparece identificado no mapa, mas separado da frota municipal.
+        </p>
+      </section>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Grande Vitória</p>
+          <h2>Painel visual de transições assistenciais</h2>
+        </div>
+        <div class="status-legend">
+          <span><i class="dot municipal"></i> PMV / Municipal</span>
+          <span><i class="dot samu"></i> SAMU 192</span>
+          <span><i class="dot alert"></i> Gargalo</span>
+        </div>
+      </header>
+
+      <section class="map-stage">
+        <div id="map" role="region" aria-label="Mapa da Grande Vitória com transições assistenciais"></div>
+        <div class="map-vignette"></div>
+
+        <article class="floating-card selected-transfer" id="selectedTransfer">
+          <p class="eyebrow">Transferência selecionada</p>
+          <h3>Selecione uma ambulância no mapa</h3>
+          <p class="muted">A linha do tempo e os dados de governança aparecerão aqui.</p>
+        </article>
+      </section>
+
+      <section class="bottom-grid">
+        <article class="panel-card timeline-card">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Microeventos</p>
+              <h3>Linha viva da transição</h3>
+            </div>
+            <span class="pill" id="timelineCode">Sem seleção</span>
+          </div>
+          <div id="timeline" class="timeline empty">
+            Selecione uma transferência no mapa.
+          </div>
+        </article>
+
+        <article class="panel-card">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Matriz de gargalos</p>
+              <h3>Onde o fluxo está travando</h3>
+            </div>
+          </div>
+          <div id="bottleneckList" class="bottleneck-list"></div>
+        </article>
+      </section>
+
+      <section class="panel-card architecture-card">
+        <div>
+          <p class="eyebrow">Arquitetura de dados</p>
+          <h3>Quatro entidades principais de suporte</h3>
+        </div>
+
+        <div class="architecture-grid">
+          <div class="architecture-item">
+            <span>01</span>
+            <strong>Evento de transição</strong>
+            <p>Código único, data, origem, destino, status e sequência.</p>
+          </div>
+          <div class="architecture-item">
+            <span>02</span>
+            <strong>Unidade/serviço</strong>
+            <p>Origem, destino, tipo de unidade e ponto de aceite.</p>
+          </div>
+          <div class="architecture-item">
+            <span>03</span>
+            <strong>Recurso operacional</strong>
+            <p>Veículo/equipe, tipo de transporte, disponibilidade, km e acionamento.</p>
+          </div>
+          <div class="architecture-item">
+            <span>04</span>
+            <strong>Microevento</strong>
+            <p>Status, horário, perfil responsável, confirmação, observação mínima e localização pontual quando autorizada.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin="">
+  </script>
+  <script src="./js/data.js"></script>
+  <script src="./js/ui.js"></script>
+  <script src="./js/map.js"></script>
+  <script src="./js/dashboard.js"></script>
+</body>
+</html>
