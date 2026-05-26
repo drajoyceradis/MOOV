@@ -1,0 +1,106 @@
+const MOOV_DATA = {
+  units: [
+    { id: "PASP", name: "PA São Pedro", type: "Origem", coords: [-20.2967, -40.3355] },
+    { id: "PA_SUA", name: "PA Enseada do Suá", type: "Origem", coords: [-20.3187, -40.2956] },
+    { id: "HEVV", name: "Hospital Evangélico", type: "Destino", coords: [-20.3429, -40.2961] },
+    { id: "HUCAM", name: "HUCAM", type: "Destino", coords: [-20.2766, -40.3038] },
+    { id: "HIMABA", name: "Hospital Infantil / referência", type: "Destino", coords: [-20.3215, -40.3462] }
+  ],
+
+  transfers: [
+    {
+      id: "R260506-P01-SM08-H01-001",
+      requestCode: "SOL-260506-P01-001",
+      flowType: "municipal",
+      vehicleLabel: "PMV-08",
+      vehicleType: "Ambulância Municipal PMV",
+      origin: "PA São Pedro",
+      destination: "Hospital Evangélico",
+      status: "deslocamento",
+      eta: "18 min",
+      alert: false,
+      route: [
+        [-20.2967, -40.3355],
+        [-20.3051, -40.3251],
+        [-20.3158, -40.3149],
+        [-20.3292, -40.3047],
+        [-20.3429, -40.2961]
+      ],
+      vehicleCoords: [-20.3194, -40.3120],
+      kmInitial: "45021",
+      kmFinal: null,
+      microevents: [
+        { key: "solicitada", label: "Solicitada", time: "08:15", profile: "Origem", state: "done" },
+        { key: "designada", label: "Veículo designado", time: "08:17", profile: "Regulação/CTS", state: "done" },
+        { key: "embarcado", label: "Paciente embarcado", time: "08:24", profile: "Equipe", state: "done" },
+        { key: "deslocamento", label: "Em deslocamento", time: "08:27", profile: "Motorista", state: "active" },
+        { key: "chegada", label: "Chegada ao destino", time: "prev. 08:45", profile: "Motorista", state: "pending" },
+        { key: "recebido", label: "Recebido", time: "--", profile: "Destino", state: "pending" }
+      ]
+    },
+
+    {
+      id: "R260506-P02-SM03-H02-002",
+      requestCode: "SOL-260506-P02-002",
+      flowType: "municipal",
+      vehicleLabel: "PMV-03",
+      vehicleType: "Transporte Sanitário Municipal",
+      origin: "PA Enseada do Suá",
+      destination: "HUCAM",
+      status: "aguardando",
+      eta: "Aguardando aceite",
+      alert: true,
+      route: [
+        [-20.3187, -40.2956],
+        [-20.3070, -40.2992],
+        [-20.2941, -40.3022],
+        [-20.2766, -40.3038]
+      ],
+      vehicleCoords: [-20.2769, -40.3040],
+      kmInitial: "11802",
+      kmFinal: "11815",
+      microevents: [
+        { key: "solicitada", label: "Solicitada", time: "07:42", profile: "Origem", state: "done" },
+        { key: "designada", label: "Veículo designado", time: "07:50", profile: "Regulação/CTS", state: "done" },
+        { key: "embarcado", label: "Paciente embarcado", time: "08:02", profile: "Equipe", state: "done" },
+        { key: "deslocamento", label: "Em deslocamento", time: "08:05", profile: "Motorista", state: "done" },
+        { key: "chegada", label: "Chegada ao destino", time: "08:21", profile: "Motorista", state: "done" },
+        { key: "recebido", label: "Aguardando recebimento", time: "+22 min", profile: "Destino", state: "active" }
+      ]
+    },
+
+    {
+      id: "SAMU-260506-USB12-H01-003",
+      requestCode: "SAMU-192-260506-003",
+      flowType: "samu",
+      vehicleLabel: "USB-12",
+      vehicleType: "SAMU 192",
+      origin: "Via pública / acionamento 192",
+      destination: "Hospital Evangélico",
+      status: "deslocamento",
+      eta: "9 min",
+      alert: false,
+      route: [
+        [-20.2973, -40.2952],
+        [-20.3072, -40.2959],
+        [-20.3225, -40.2964],
+        [-20.3429, -40.2961]
+      ],
+      vehicleCoords: [-20.3141, -40.2962],
+      kmInitial: null,
+      kmFinal: null,
+      microevents: [
+        { key: "acionamento", label: "Acionamento SAMU", time: "08:31", profile: "Central 192", state: "done" },
+        { key: "designada", label: "USB designada", time: "08:33", profile: "SAMU", state: "done" },
+        { key: "deslocamento", label: "Em deslocamento", time: "08:37", profile: "SAMU", state: "active" },
+        { key: "chegada", label: "Chegada ao destino", time: "prev. 08:49", profile: "SAMU/Destino", state: "pending" }
+      ]
+    }
+  ],
+
+  bottlenecks: [
+    { label: "Espera por recebimento", detail: "Maior atraso atual", value: "22 min" },
+    { label: "Veículo designado → embarque", detail: "Janela média observada", value: "9 min" },
+    { label: "Completude do km final", detail: "Campos preenchidos", value: "68%" }
+  ]
+};
