@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MOOV | Microformulário da Enfermagem</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div class="ambient-grid"></div>
+  <main class="form-page">
+    <div class="form-shell">
+      <header class="form-header">
+        <a class="brand-mark" href="../index.html">MOOV</a>
+        <p class="eyebrow">Link seguro por perfil</p>
+        <h1>Microcheck da equipe assistencial</h1>
+        <p class="muted">A equipe registra apenas a etapa assistencial mínima da transição, sem substituir prontuário.</p>
+      </header>
+
+      <section class="panel-card form-card">
+        <p class="eyebrow">Transferência</p>
+        <div class="transfer-summary">
+          <div class="summary-line"><span>Código</span><strong>R260506-P01-SM08-H01-001</strong></div>
+          <div class="summary-line"><span>Origem</span><strong>PA São Pedro</strong></div>
+          <div class="summary-line"><span>Destino</span><strong>Hospital Evangélico</strong></div>
+        </div>
+
+        <form data-mock-form>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="field-label" for="condition">Condição de transporte</label>
+              <select class="form-select" id="condition" required>
+                <option value="">Selecione</option>
+                <option>Estável para transporte</option>
+                <option>Requer monitorização</option>
+                <option>Requer oxigênio</option>
+                <option>Requer acompanhante técnico</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="field-label" for="support">Suporte mínimo</label>
+              <select class="form-select" id="support" required>
+                <option value="">Selecione</option>
+                <option>Maca</option>
+                <option>Cadeira de rodas</option>
+                <option>Oxigênio</option>
+                <option>Sem suporte adicional</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="check-list">
+            <label class="check-item">
+              <input type="checkbox" required />
+              <span>Paciente preparado para embarque.</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" required />
+              <span>Documentos mínimos de encaminhamento conferidos pela equipe assistencial.</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" />
+              <span>Há pendência assistencial relevante para recebimento no destino.</span>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label class="field-label" for="obs">Observação assistencial mínima</label>
+            <textarea class="form-textarea" id="obs" placeholder="Não substituir prontuário. Registrar apenas ponto relevante para a transição."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button class="primary-button" type="submit">Registrar microevento</button>
+            <a class="secondary-button" href="../index.html">Voltar ao painel</a>
+          </div>
+
+          <div class="success-box"></div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+  <script src="../js/forms.js"></script>
+</body>
+</html>
