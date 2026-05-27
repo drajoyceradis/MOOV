@@ -28,16 +28,43 @@ let vehicleMarkers = [];
 let unitMarkers = [];
 let selectedTransferId = null;
 
-function ensureLeaflet() {
-  if (typeof L === "undefined") {
-    console.error("Leaflet não está disponível. Verifique se o script da CDN carregou corretamente.");
-    const errorBanner = document.createElement("div");
-    errorBanner.className = "map-error-banner";
-    errorBanner.textContent = "Erro ao carregar o mapa. Atualize a página ou verifique sua conexão.";
-    document.body.prepend(errorBanner);
-    return false;
+function loadScript(src, integrity) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = src;
+    if (integrity) {
+      script.integrity = integrity;
+      script.crossOrigin = "";
+    }
+    script.defer = true;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error(`Falha ao carregar script ${src}`));
+    document.head.appendChild(script);
+  });
+}
+
+async function ensureLeaflet() {
+  if (typeof L !== "undefined") {
+    return true;
   }
-  return true;
+
+  try {
+    await loadScript("https://unpkg.com/leaflet@1.9.4/dist/leaflet.js", "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=");
+    return true;
+  } catch (primaryError) {
+    console.warn("Falha ao carregar Leaflet da CDN principal, tentando fallback.", primaryError);
+    try {
+      await loadScript("https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js");
+      return true;
+    } catch (fallbackError) {
+      console.error("Falha ao carregar Leaflet no fallback.", fallbackError);
+      const errorBanner = document.createElement("div");
+      errorBanner.className = "map-error-banner";
+      errorBanner.textContent = "Erro ao carregar o mapa. Atualize a página ou verifique sua conexão.";
+      document.body.prepend(errorBanner);
+      return false;
+    }
+  }
 }
 
 function sanitize(value) {
@@ -331,7 +358,7 @@ function bindControls() {
   });
 }
 
-function initApp() {
+async function initApp() {
   ELEMENTS.flowType = document.getElementById("flowType");
   ELEMENTS.statusFilter = document.getElementById("statusFilter");
   ELEMENTS.resetFilters = document.getElementById("resetFilters");
@@ -344,7 +371,7 @@ function initApp() {
   ELEMENTS.timelineCode = document.getElementById("timelineCode");
   ELEMENTS.bottleneckList = document.getElementById("bottleneckList");
 
-  if (!ensureLeaflet()) {
+  if (!(await ensureLeaflet())) {
     return;
   }
 
