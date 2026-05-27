@@ -36,6 +36,19 @@ body {
   overflow-x: hidden;
 }
 
+.map-error-banner {
+  position: fixed;
+  inset: 0 auto auto 0;
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(255, 77, 109, .96);
+  color: white;
+  font-weight: 700;
+  text-align: center;
+  z-index: 9999;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .35);
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -89,6 +102,20 @@ a {
   border-radius: 22px;
   box-shadow: 0 24px 70px rgba(0, 0, 0, .38), inset 0 1px 0 rgba(255, 255, 255, .04);
   backdrop-filter: blur(16px);
+  transition: transform .26s ease, box-shadow .26s ease, border-color .26s ease, background .26s ease;
+  will-change: transform;
+}
+
+.panel:hover,
+.hero-card:hover,
+.filter-card:hover,
+.note-card:hover,
+.metrics article:hover,
+.selected-card:hover,
+.architecture-grid article:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, .45);
+  border-color: rgba(37, 225, 220, .45);
 }
 
 .hero-card {
@@ -143,12 +170,15 @@ a {
   border: 1px solid var(--line);
   border-radius: 15px;
   font-size: 14px;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease, color .2s ease;
 }
 
-.quick-links a.active,
-.quick-links a:hover {
+.quick-links a:hover,
+.quick-links a.active {
   color: var(--text);
-  background: rgba(37, 225, 220, .10);
+  background: rgba(37, 225, 220, .12);
+  transform: translateY(-1px);
+  border-color: rgba(37, 225, 220, .5);
 }
 
 .metrics {
@@ -207,6 +237,15 @@ a {
   border-radius: 14px;
   padding: 12px;
   outline: none;
+  transition: border-color .22s ease, box-shadow .22s ease, background .22s ease;
+}
+
+.filter-card select:focus,
+.form-card input:focus,
+.form-card select:focus,
+.form-card textarea:focus {
+  border-color: rgba(37, 225, 220, .8);
+  box-shadow: 0 0 0 4px rgba(37, 225, 220, .1);
 }
 
 .filter-card select {
@@ -221,6 +260,16 @@ button,
   padding: 8px 12px;
   font-weight: 800;
   cursor: pointer;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease, color .2s ease;
+}
+
+button:hover,
+button:focus-visible,
+.form-actions a:hover,
+.form-actions button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(37, 225, 220, .7);
+  background: rgba(37, 225, 220, .14);
 }
 
 button {
@@ -257,6 +306,19 @@ button {
 
 .legend p {
   margin: 0;
+  transition: color .22s ease;
+}
+
+.legend p:hover {
+  color: var(--text);
+}
+
+#map {
+  cursor: grab;
+}
+
+#map:active {
+  cursor: grabbing;
 }
 
 .dot {
@@ -292,6 +354,12 @@ button {
   overflow: hidden;
   background: var(--surface-dark);
   box-shadow: 0 24px 70px rgba(0, 0, 0, .38);
+  transition: box-shadow .26s ease, border-color .26s ease;
+}
+
+.map-card:hover {
+  box-shadow: 0 34px 100px rgba(0, 0, 0, .55);
+  border-color: rgba(37, 225, 220, .35);
 }
 
 #map {
@@ -301,6 +369,11 @@ button {
   height: 100%;
   z-index: 1;
   filter: saturate(.82) contrast(1.08) brightness(.82);
+  transition: filter .26s ease;
+}
+
+.map-card:hover #map {
+  filter: saturate(1) contrast(1.12) brightness(.88);
 }
 
 .selected-card {
@@ -386,6 +459,14 @@ button {
   border-radius: 17px;
   background: rgba(17, 42, 67, .84);
   border: 1px solid var(--line);
+  transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease, background .22s ease;
+  cursor: pointer;
+}
+
+.timeline-step:hover {
+  border-color: rgba(37, 225, 220, .45);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, .18);
 }
 
 .timeline-step.done {
@@ -416,6 +497,25 @@ button {
   display: grid;
   gap: 12px;
   margin-top: 16px;
+}
+
+.bottleneck-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--panel-soft);
+  transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease, background .22s ease;
+  cursor: pointer;
+}
+
+.bottleneck-item:hover {
+  border-color: rgba(255, 177, 59, .6);
+  transform: translateY(-2px);
+  background: rgba(255, 177, 59, .06);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, .16);
 }
 
 .bottleneck {
@@ -521,6 +621,17 @@ button {
   font-size: 9px;
   font-weight: 900;
   white-space: nowrap;
+  transition: transform .18s ease;
+}
+
+.leaflet-marker-icon {
+  transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
+}
+
+.leaflet-marker-icon.marker-hover {
+  transform: scale(1.12) !important;
+  filter: drop-shadow(0 18px 24px rgba(0,0,0,.35));
+  z-index: 10000 !important;
 }
 
 .vehicle-wrap.samu .vehicle-label {

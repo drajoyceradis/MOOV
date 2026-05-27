@@ -28,6 +28,18 @@ let vehicleMarkers = [];
 let unitMarkers = [];
 let selectedTransferId = null;
 
+function ensureLeaflet() {
+  if (typeof L === "undefined") {
+    console.error("Leaflet não está disponível. Verifique se o script da CDN carregou corretamente.");
+    const errorBanner = document.createElement("div");
+    errorBanner.className = "map-error-banner";
+    errorBanner.textContent = "Erro ao carregar o mapa. Atualize a página ou verifique sua conexão.";
+    document.body.prepend(errorBanner);
+    return false;
+  }
+  return true;
+}
+
 function sanitize(value) {
   return String(value ?? "").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
@@ -155,18 +167,30 @@ function drawTransfers(transfers) {
       color: routeColor,
       weight: 11,
       opacity: 0.18,
-      dashArray: item.alert ? "8, 8" : null
+      dashArray: item.alert ? "8, 8" : null,
+      interactive: true
     }).addTo(map);
 
     const route = L.polyline(item.route, {
       color: routeColor,
       weight: 4,
       opacity: 0.95,
-      dashArray: item.alert ? "8, 8" : null
+      dashArray: item.alert ? "8, 8" : null,
+      interactive: true
     }).addTo(map);
 
-    glow.on("click", clickHandler);
-    route.on("click", clickHandler);
+    const setHover = () => {
+      route.setStyle({ weight: 6, opacity: 1 });
+      glow.setStyle({ opacity: 0.28 });
+    };
+
+    const resetHover = () => {
+      route.setStyle({ weight: 4, opacity: 0.95 });
+      glow.setStyle({ opacity: 0.18 });
+    };
+
+    glow.on("click", clickHandler).on("mouseover", setHover).on("mouseout", resetHover);
+    route.on("click", clickHandler).on("mouseover", setHover).on("mouseout", resetHover);
     routeLayers.push(glow, route);
 
     const marker = L.marker(item.vehicleCoords, {
@@ -181,6 +205,15 @@ function drawTransfers(transfers) {
     `);
 
     marker.on("click", clickHandler);
+    marker.on("mouseover", () => {
+      const el = marker.getElement();
+      if (el) el.classList.add("marker-hover");
+    });
+    marker.on("mouseout", () => {
+      const el = marker.getElement();
+      if (el) el.classList.remove("marker-hover");
+    });
+
     vehicleMarkers.push(marker);
   });
 
@@ -311,6 +344,10 @@ function initApp() {
   ELEMENTS.timelineCode = document.getElementById("timelineCode");
   ELEMENTS.bottleneckList = document.getElementById("bottleneckList");
 
+  if (!ensureLeaflet()) {
+    return;
+  }
+
   initMap();
   drawUnits();
   renderBottlenecks();
@@ -320,6 +357,12 @@ function initApp() {
   if (!selectedTransferId && MOOV_DATA.transfers.length) {
     selectTransfer(MOOV_DATA.transfers[0].id);
   }
+
+  window.addEventListener("resize", () => {
+    if (map) {
+      map.invalidateSize(true);
+    }
+  });
 }
 
 document.addEventListener("DOMContentLoaded", initApp);
