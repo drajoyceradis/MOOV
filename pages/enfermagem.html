@@ -1,1 +1,72 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>MOOV | Microformulário Enfermagem</title><link rel="stylesheet" href="../css/styles.css"/></head><body class="form-body"><main class="form-shell"><header><a class="brand-mark" href="../index.html">MOOV</a><p style="color:var(--muted)">Registro assistencial mínimo, sem substituir prontuário.</p><h1>Microcheck da equipe assistencial</h1></header><section class="panel form-card"><form id="form"><label>Condição de transporte</label><select required><option value="">Selecione</option><option>Estável para transporte</option><option>Requer monitorização</option><option>Requer oxigênio</option><option>Requer acompanhante técnico</option></select><label>Suporte mínimo</label><select required><option value="">Selecione</option><option>Maca</option><option>Cadeira de rodas</option><option>Oxigênio</option><option>Sem suporte adicional</option></select><label class="check-item"><input type="checkbox" required/> Paciente preparado para embarque.</label><label class="check-item"><input type="checkbox" required/> Documentos mínimos conferidos pela equipe.</label><label>Observação assistencial mínima</label><textarea placeholder="Não substituir prontuário. Registrar apenas ponto relevante para a transição."></textarea><div class="form-actions"><button type="submit">Registrar microevento</button><a href="../index.html">Voltar ao painel</a></div><div class="success" id="success">Microevento registrado. No sistema real, esta confirmação atualizaria a linha do tempo do painel gestor.</div></form></section></main><script>document.getElementById("form").addEventListener("submit",function(event){event.preventDefault();document.getElementById("success").classList.add("show")});</script></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MOOV | Microformulário Enfermagem</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+
+<body class="form-body">
+  <main class="form-shell">
+    <header>
+      <a class="brand-mark" href="../index.html">MOOV</a>
+      <p style="color: var(--muted)">
+        Registro assistencial mínimo, sem substituir prontuário.
+      </p>
+      <h1>Microcheck da equipe assistencial</h1>
+    </header>
+
+    <section class="panel form-card">
+      <form id="form">
+        <label>Condição de transporte</label>
+        <select required>
+          <option value="">Selecione</option>
+          <option>Estável para transporte</option>
+          <option>Requer monitorização</option>
+          <option>Requer oxigênio</option>
+          <option>Requer acompanhante técnico</option>
+        </select>
+
+        <label>Suporte mínimo</label>
+        <select required>
+          <option value="">Selecione</option>
+          <option>Maca</option>
+          <option>Cadeira de rodas</option>
+          <option>Oxigênio</option>
+          <option>Sem suporte adicional</option>
+        </select>
+
+        <label class="check-item">
+          <input type="checkbox" required />
+          Paciente preparado para embarque.
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox" required />
+          Documentos mínimos conferidos pela equipe.
+        </label>
+
+        <label>Observação assistencial mínima</label>
+        <textarea placeholder="Não substituir prontuário. Registrar apenas ponto relevante para a transição."></textarea>
+
+        <div class="form-actions">
+          <button type="submit">Registrar microevento</button>
+          <a href="../index.html">Voltar ao painel</a>
+        </div>
+
+        <div class="success" id="success">
+          Microevento registrado. No sistema real, esta confirmação atualizaria a linha do tempo do painel gestor.
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById("form").addEventListener("submit", function (event) {
+      event.preventDefault();
+      document.getElementById("success").classList.add("show");
+    });
+  </script>
+</body>
+</html>
