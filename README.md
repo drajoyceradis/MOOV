@@ -60,4 +60,4 @@ O mapa usa Leaflet + Carto/OSM por CDN, então precisa de internet.
 3. Criar autenticação e controle por perfil.
 4. Persistir microeventos em banco de dados.
 5. Incluir logs, tokens temporários, RBAC e trilha de auditoria.
-6. Criar deploy em GitHub Pages/Vercel/Netlify para demonstração.
+6. Criar deploy em GitHub Pages/Vercel/Netlify para demonstração
