@@ -1,1 +1,61 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>MOOV | Microformulário Destino</title><link rel="stylesheet" href="../css/styles.css"/></head><body class="form-body"><main class="form-shell"><header><a class="brand-mark" href="../index.html">MOOV</a><p style="color:var(--muted)">Confirmação de chegada, aceite e recebimento.</p><h1>Microcheck da unidade de destino</h1></header><section class="panel form-card"><form id="form"><label>Status no destino</label><select required><option value="">Selecione</option><option>Chegou ao destino</option><option>Aguardando recebimento</option><option>Recebido pela equipe</option><option>Recebimento pendente</option></select><label>Setor de recebimento</label><input placeholder="Ex.: Pronto-socorro / sala vermelha"/><label class="check-item"><input type="checkbox" required/> Confirmo chegada da equipe/veículo.</label><label>Observação operacional mínima</label><textarea placeholder="Ex.: aguardando leito, aguardando médico..."></textarea><div class="form-actions"><button type="submit">Registrar microevento</button><a href="../index.html">Voltar ao painel</a></div><div class="success" id="success">Microevento registrado. No sistema real, esta confirmação atualizaria a linha do tempo do painel gestor.</div></form></section></main><script>document.getElementById("form").addEventListener("submit",function(event){event.preventDefault();document.getElementById("success").classList.add("show")});</script></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MOOV | Microformulário Destino</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+
+<body class="form-body">
+  <main class="form-shell">
+    <header>
+      <a class="brand-mark" href="../index.html">MOOV</a>
+      <p style="color: var(--muted)">
+        Confirmação de chegada, aceite e recebimento.
+      </p>
+      <h1>Microcheck da unidade de destino</h1>
+    </header>
+
+    <section class="panel form-card">
+      <form id="form">
+        <label>Status no destino</label>
+        <select required>
+          <option value="">Selecione</option>
+          <option>Chegou ao destino</option>
+          <option>Aguardando recebimento</option>
+          <option>Recebido pela equipe</option>
+          <option>Recebimento pendente</option>
+        </select>
+
+        <label>Setor de recebimento</label>
+        <input placeholder="Ex.: Pronto-socorro / sala vermelha" />
+
+        <label class="check-item">
+          <input type="checkbox" required />
+          Confirmo chegada da equipe/veículo.
+        </label>
+
+        <label>Observação operacional mínima</label>
+        <textarea placeholder="Ex.: aguardando leito, aguardando médico..."></textarea>
+
+        <div class="form-actions">
+          <button type="submit">Registrar microevento</button>
+          <a href="../index.html">Voltar ao painel</a>
+        </div>
+
+        <div class="success" id="success">
+          Microevento registrado. No sistema real, esta confirmação atualizaria a linha do tempo do painel gestor.
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById("form").addEventListener("submit", function (event) {
+      event.preventDefault();
+      document.getElementById("success").classList.add("show");
+    });
+  </script>
+</body>
+</html>
